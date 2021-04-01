@@ -1,0 +1,51 @@
+<h1>Posts list:</h1>
+<div class="filter-container">
+  <p>Filter by query:</p>
+  <div class="input-container">
+    <input type="text" [(ngModel)]="inputQuery" (keyup)="filterData()">
+  </div>
+</div>
+<table *ngIf="postList; else noContent">
+  <tr>
+    <th>Title</th>
+    <th>Body</th>
+    <th></th>
+  </tr>
+  <ng-container *ngFor="let post of filteredList; let rowIndex = index;">
+    <tr>
+      <td>{{ post.title }}</td>
+      <td>{{ post.body }}</td>
+      <td>
+        <button (click)="getUserInfo(post.userId, rowIndex)">more</button>
+      </td>
+    </tr>
+    <tr *ngIf="userData && activeUserDataRow === rowIndex">
+      <td colspan="3">
+        <div class="user-data--container">
+          <div class="text-bold user-data--title">User data:</div>
+          <ul class="users-list">
+            <li class="single-user-data">
+              <div class="single-user-data--title">Name: </div>
+              <div class="text-bold">{{ userData.name }}</div>
+            </li>
+            <li class="single-user-data">
+              <div class="single-user-data--title">Email: </div>
+              <div class="text-bold">{{ userData.email }}</div>
+            </li>
+            <li class="single-user-data">
+              <div class="single-user-data--title">Id: </div>
+              <div class="text-bold">{{ userData.id }}</div>
+            </li>
+            <li class="single-user-data">
+              <div class="single-user-data--title">Phone: </div>
+              <div class="text-bold">{{ userData.phone }}</div>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  </ng-container>
+</table>
+<ng-template #noContent>
+  Content not loaded
+</ng-template>
